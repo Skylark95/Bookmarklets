@@ -9,10 +9,21 @@ var games = [],
         return 'http://store.steampowered.com/search/?term=' + encodeURIComponent(name);
     },
     calcDiscount = function(now, was) {
+        if (!was || !now) {
+            return '';
+        }
         return Math.round((1 - (now.substr(1) / was.substr(1))) * 100) + '%';
     },
+    trimIf = function(str, find) {
+        if (str.lastIndexOf(find) > 0) {
+            return str.substr(0, str.lastIndexOf(find));
+        }
+        return str;
+    },
     findTitle = function($e) {
-        return $e.attr('data-sku').slice(0, -5);
+        var title = $e.attr('data-sku');
+        title = trimIf(title, ' - PC');
+        return trimIf(title, ' (1)');
     },
     buildUrl = function(relativeUrl) {
         return window.location.protocol + '//' + window.location.hostname + relativeUrl;
