@@ -1,3 +1,7 @@
+// ==Bookmarklet==
+// @name Ninite
+// @author Derek <derek@skylark95.com>
+// ==/Bookmarklet==
 var span = document.getElementsByTagName('span'),
     result = document.getElementsByClassName('didyouknow')[0],
     apps = '<h2 style="margin-bottom:1em;">Installer includes:</h2>';

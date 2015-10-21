@@ -1,0 +1,23 @@
+{
+  "name": "bookmarklets",
+  "version": "0.0.1",
+  "description": "A collection of bookmarklets I have made to do various things",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Skylark95/Bookmarklets.git"
+  },
+  "author": "Derek <derek@skylark95.com>",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/Skylark95/Bookmarklets/issues"
+  },
+  "homepage": "https://github.com/Skylark95/Bookmarklets#readme",
+  "devDependencies": {
+    "bookmarklet": "0.0.4",
+    "del": "^2.0.2",
+    "gulp": "^3.9.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-util": "^3.0.7",
+    "through2": "^2.0.0"
+  }
+}

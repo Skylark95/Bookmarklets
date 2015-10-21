@@ -1,8 +1,7 @@
-/*
- * Green Man Gaming GameDeals Reddit Table
- * By: Skylark95
- * http://www.skylark95.com/
- */
+// ==Bookmarklet==
+// @name GreenManGamingRedditTable
+// @author Derek <derek@skylark95.com>
+// ==/Bookmarklet==
 var games = [],
     table = 'Name | Was | Now | Discount | Steam\n---|---|----|----|----\n',
     steamUri = function(name) {
@@ -67,5 +66,5 @@ $('li a.product-container').each(function(idx, e) {
 $.each(games, function(idx, game) {
     table += '[' + game.name + '](' + game.url +') | ' + game.was + ' | ' + game.now + ' | ' + game.discount + ' | [Search](' + game.steam + ')\n';
 });
-table += '[Source Code](https://github.com/Skylark95/Bookmarklets/blob/master/GreenManGamingRedditTable.js)';
+table += '[Source Code](https://github.com/Skylark95/Bookmarklets/blob/master/src/GreenManGamingRedditTable.js)';
 console.log(table);
