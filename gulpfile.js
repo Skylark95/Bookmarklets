@@ -5,11 +5,15 @@ var bookmarklet = require('./gulpBookmarklet.js');
 
 gulp.task('default', function() {
     return gulp.src('src/*.js')
-        .pipe(bookmarklet())
+        .pipe(bookmarklet({
+            bookmarksFile: 'bookmarklets.html',
+            single: true,
+            basedir: 'html'
+        }))
         .pipe(rename({
             extname: '.min.js'
         }))
-        .pipe(gulp.dest('bookmarklets'));
+        .pipe(gulp.dest('min.js'));
 });
 
 gulp.task('clean', function() {
