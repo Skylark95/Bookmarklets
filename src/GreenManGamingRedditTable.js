@@ -68,3 +68,4 @@ $.each(games, function(idx, game) {
 });
 table += '[Source Code](https://github.com/Skylark95/Bookmarklets/blob/master/src/GreenManGamingRedditTable.js)';
 console.log(table);
+console.log(JSON.stringify(games));
