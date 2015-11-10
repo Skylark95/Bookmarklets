@@ -16,7 +16,6 @@
     "bookmarklet": "0.0.4",
     "del": "^2.0.2",
     "gulp": "^3.9.0",
-    "gulp-rename": "^1.2.2",
     "gulp-util": "^3.0.7",
     "netscape-bookmarks": "0.0.0",
     "path": "^0.12.7",

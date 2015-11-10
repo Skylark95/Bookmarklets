@@ -1,6 +1,5 @@
 var gulp = require('gulp');
 var del = require('del');
-var rename = require('gulp-rename');
 var bookmarklet = require('./gulpBookmarklet.js');
 
 gulp.task('html', function() {
