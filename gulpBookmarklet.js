@@ -1,22 +1,23 @@
 var through = require('through2');
 var gutil = require('gulp-util');
 var bookmarklet = require('bookmarklet');
-var bookmarks = require('netscape-bookmarks');
-var fs = require('fs');
-var File = gutil.File;
+var netscape = require('netscape-bookmarks');
+var path = require('path');
+var replaceExt = require('replace-ext');
 var PluginError = gutil.PluginError;
 
 const PLUGIN_NAME = 'gulp-bookmarklet';
 
 module.exports = function(opt) {
     var opt = opt || {},
-        bookmarksFile = opt.bookmarksFile,
-        single = opt.single,
-        basedir = opt.basedir || '',
-        bookmarklets = {};
+        format = opt.format || 'js',
+        htmlSingleFileName = opt.file || 'bookmarklets.html',
+        validFormats = ['js', 'html', 'htmlsingle'],
+        bookmarklets = {},
+        latestFile;
 
-    if (basedir.length > 0 && basedir.lastIndexOf('/') === -1) {
-        basedir += '/';
+    if (validFormats.indexOf(format) === -1) {
+        throw new PluginError(PLUGIN_NAME, "Invalid format '" + format + "' - Must be one of ['js', 'html', 'htmlsingle']");
     }
 
     function generateBookmarklet(file, enc, cb) {
@@ -26,7 +27,8 @@ module.exports = function(opt) {
         }
 
         if (file.isBuffer()) {
-            var data = bookmarklet.parseFile(file.contents.toString(enc));
+            var filename = path.basename(file.path),
+                data = bookmarklet.parseFile(file.contents.toString(enc));
 
             if (data.errors) {
                 this.emit('error', new PluginError(PLUGIN_NAME, data.errors.join('\n')));
@@ -34,30 +36,39 @@ module.exports = function(opt) {
             }
 
             var code = bookmarklet.convert(data.code, data.options);
+            latestFile = file;
 
-            if (data.options.name) {
-                bookmarklets[data.options.name] = code;
+            if (format === 'htmlsingle') {
+                bookmarklets[filename] = code;
+            } else {
+                if (format === 'html') {
+                    var bookmark = {};
+                    bookmark[filename] = code;
+                    code = netscape(bookmark);
+                    file.path = replaceExt(file.path, '.html');
+                } else { // format === 'js'
+                    file.path = replaceExt(file.path, '.min.js');
+                }
+                file.contents = new Buffer(code);
+                this.push(file);
             }
-
-            if (single && data.options.name) {
-                var singleBookmarklet = {};
-                singleBookmarklet[data.options.name] = code;
-                fs.writeFile(basedir + data.options.name + '.html', bookmarks(singleBookmarklet));
-            }
-
-            file.contents = new Buffer(code, enc);
-            this.push(file);
-
             cb();
         }
     }
 
-    function writeBookmarksFile() {
-        if (bookmarksFile) {
-            fs.writeFile(bookmarksFile, bookmarks(bookmarklets));
+    function endStream(cb) {
+        if (format !== 'htmlsingle' || bookmarklets.length === 0) {
+            cb();
+            return;
         }
+
+        var code = netscape(bookmarklets),
+            file = latestFile.clone({contents: false});
+        file.path = path.join(latestFile.base, htmlSingleFileName);
+        file.contents = new Buffer(code);
+        this.push(file);
+        cb();
     }
 
-    return through.obj(generateBookmarklet)
-                  .on('end', writeBookmarksFile);
+    return through.obj(generateBookmarklet, endStream);
 };
