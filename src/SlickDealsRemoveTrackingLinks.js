@@ -7,4 +7,7 @@ $('a[href]').each(function() {
     if (url && url.length > 0) {
         this.href = decodeURIComponent(url[0].substr(4));
     }
+    $('#buyNowButton').before('<a name="post"></a>');
+    window.location.hash = 'post';
+    $('.readMore').click();
 });
