@@ -6,5 +6,5 @@
 <Title>Bookmarks</Title>
 <H1>Bookmarks</H1>
 <DL><p>
-<DT><A HREF="javascript:(function()%7B%24(%22a%5Bhref%5D%22).each(function()%7Bvar%20e%3Dthis.href.match(%22%26u2%3D.*%22)%3Be%26%26e.length%3E0%26%26(this.href%3DdecodeURIComponent(e%5B0%5D.substr(4)))%2C%24(%22%23buyNowButton%22).before('%3Ca%20name%3D%22post%22%3E%3C%2Fa%3E')%2Cwindow.location.hash%3D%22post%22%2C%24(%22.readMore%22).click()%7D)%3B%7D)()">SlickDealsRemoveTrackingLinks.js</a>
+<DT><A HREF="javascript:(function()%7B%24('a%5Bhref*%3D%22%26u2%3D%22%5D').each(function()%7Bthis.href%3DdecodeURIComponent(this.href.substr(this.href.indexOf(%22%26u2%3D%22)%2B4))%7D)%2C%24(%22%23buyNowButton%22).before('%3Ca%20name%3D%22post%22%3E%3C%2Fa%3E')%2Cwindow.location.hash%3D%22post%22%2C%24(%22.readMore%22).click()%3B%7D)()">SlickDealsRemoveTrackingLinks.js</a>
 </DL><p>
