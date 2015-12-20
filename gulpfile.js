@@ -1,6 +1,6 @@
 var gulp = require('gulp');
 var del = require('del');
-var bookmarklet = require('./gulpBookmarklet.js');
+var bookmarklet = require('gulp-bookmarklet');
 
 gulp.task('html', function() {
     return gulp.src('src/*.js')
